@@ -15,13 +15,14 @@ type Gps2dLoc struct {
 type Gps2dLocVel struct {
 	Long float64
 	Lati float64
-	Vel  float64
+	Vel  int
 }
 
 type NearCamLocVel struct {
 	Distance  float64
-	Vel       float64
+	Vel       int
 	Timestamp int
+	Flag      int
 }
 
 type Gps4dLoc struct {
@@ -58,13 +59,33 @@ func (tt *GLibInfo) InitState(id string, ts int, locx float64, locy float64) {
 	ta := Gps2dLocVel{}
 	ta.Lati = 25.080223
 	ta.Long = 121.697908
-	ta.Vel = 50.0
+	ta.Vel = 50
 	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
 
 	//	25.0674 121.66832
-	ta.Lati = 25.0674
-	ta.Long = 121.66832
-	ta.Vel = 100.0
+	ta.Lati = 25.114392
+	ta.Long = 121.685341
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.112894
+	ta.Long = 121.690519
+	ta.Vel = 40
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.078060
+	ta.Long = 121.691110
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.065942
+	ta.Long = 121.674905
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.068420
+	ta.Long = 121.681260
+	ta.Vel = 90
 	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
 
 	tt.TargetCameraLoc.Timestamp = ts
@@ -84,12 +105,20 @@ func (tt *GLibInfo) InitState(id string, ts int, locx float64, locy float64) {
 func (tt *GLibInfo) UpdateCamera() {
 }
 
-func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, float64) {
+//func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, int) {
+func (tt *GLibInfo) Start(ts int, locx float64, locy float64) string {
 	tt.UpdateCamera()
 	dist, flag := tt.GLibFilter(ts, locx, locy)
 	fmt.Println("start now", ts)
 	vel := tt.NearestCamera.Vel
-	return dist, flag, vel
+	jm := make(map[string]interface{})
+	jm["dist"] = dist
+	jm["flag"] = flag
+	jm["vel"] = vel
+	ret, _ := json.Marshal(jm)
+
+	//return dist, flag, vel
+	return string(ret)
 
 }
 
@@ -97,7 +126,10 @@ func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, flo
 func (tt *GLibInfo) FilterDistance() (float64, int) {
 	//now we can only serve one camera
 	tt.NearestCamera.Distance = 9999999.88
-	tt.NearestCamera.Vel = 9999999.88
+	tt.NearestCamera.Vel = 8888888
+	tt.NearestCamera.Timestamp = 0
+	tt.NearestCamera.Flag = 0
+
 	fmt.Println("show near camera", tt.NearestCamera.Distance, tt.NearestCamera.Vel)
 	for i := 0; i < len(tt.TargetCameraLoc.Loc); i++ {
 		fmt.Println("-----------calculate on camera:", i)
@@ -112,26 +144,34 @@ func (tt *GLibInfo) FilterDistance() (float64, int) {
 		distprev := tt.FilterCalDistance(locpx, locpy, tarx, tary)
 		fmt.Println("dist current, dist prev", distcurr, distprev)
 		// where 30 is faraway distance
-		if distprev < distcurr && distcurr > 30.0 {
+		if distcurr < 100.0 {
 			//return distcurr, 0
-			fmt.Println("not put in candidate")
+			fmt.Println("--------  run into fit camera ----------")
+			tt.NearestCamera.Distance = distcurr
+			tt.NearestCamera.Timestamp = tt.TargetCameraLoc.Timestamp
+			tt.NearestCamera.Vel = tt.TargetCameraLoc.Loc[i].Vel
+			tt.NearestCamera.Flag = 2
 		} else {
 			// calculate Nearest Camera that is satisfy condition
-			if distcurr < tt.NearestCamera.Distance {
-				fmt.Println("--------  run into fit camera ----------")
-				tt.NearestCamera.Distance = distcurr
-				tt.NearestCamera.Timestamp = tt.TargetCameraLoc.Timestamp
-				tt.NearestCamera.Vel = tt.TargetCameraLoc.Loc[i].Vel
+			// set up arround camera
+			if (distcurr < distprev) && distcurr < 1000.0 {
+				if distcurr < tt.NearestCamera.Distance {
+					fmt.Println("--------  run into fit camera ----------")
+					tt.NearestCamera.Distance = distcurr
+					tt.NearestCamera.Timestamp = tt.TargetCameraLoc.Timestamp
+					tt.NearestCamera.Vel = tt.TargetCameraLoc.Loc[i].Vel
+					tt.NearestCamera.Flag = 1
+				}
 			}
 
 			//return distcurr, 1
 		}
 	}
-	flag := 0
+	//end of for loop end redefine the stauts to more emergency
 	if tt.NearestCamera.Distance < 300.0 {
-		flag = 1
+		tt.NearestCamera.Flag = 2
 	}
-	return tt.NearestCamera.Distance, flag
+	return tt.NearestCamera.Distance, tt.NearestCamera.Flag
 	//	return distcurr, 0
 }
 
@@ -143,18 +183,21 @@ func (tt *GLibInfo) GLibFilter(ts int, gpsx float64, gpsy float64) (float64, int
 	//	tt.FilterInitMap()
 	dist, runflag := tt.FilterDistance()
 	tt.FilterUpdatePrev(ts, gpsx, gpsy)
-	if runflag != 0 {
-		var notiflag int
-		fmt.Println(dist)
-		if dist < 500.0 {
-			notiflag = 1
+	return dist, runflag
+	/*
+		if runflag != 0 {
+			var notiflag int
+			fmt.Println(dist)
+			if dist < 500.0 {
+				notiflag = 1
+			} else {
+				notiflag = 0
+			}
+			return dist, notiflag
 		} else {
-			notiflag = 0
+			return dist, 0
 		}
-		return dist, notiflag
-	} else {
-		return dist, 0
-	}
+	*/
 }
 
 func (tt *GLibInfo) UpdateCurrent(ts int, gpsx float64, gpsy float64) {
