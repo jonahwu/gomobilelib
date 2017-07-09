@@ -12,6 +12,17 @@ type Gps2dLoc struct {
 	Long float64
 	Lati float64
 }
+type Gps2dLocVel struct {
+	Long float64
+	Lati float64
+	Vel  float64
+}
+
+type NearCamLocVel struct {
+	Distance  float64
+	Vel       float64
+	Timestamp int
+}
 
 type Gps4dLoc struct {
 	Long      float64
@@ -20,7 +31,7 @@ type Gps4dLoc struct {
 }
 
 type ListGps2dLocTim struct {
-	Loc       []Gps2dLoc
+	Loc       []Gps2dLocVel
 	Timestamp int
 }
 
@@ -31,6 +42,7 @@ type GLibInfo struct {
 	CurrentLoc      Gps4dLoc
 	TargetCameraLoc ListGps2dLocTim
 	CreateLoc       Gps4dLoc
+	NearestCamera   NearCamLocVel
 }
 
 func NewGp2dLoc() *Gps2dLoc {
@@ -39,36 +51,97 @@ func NewGp2dLoc() *Gps2dLoc {
 }
 
 func (tt *GLibInfo) InitState(id string, ts int, locx float64, locy float64) {
-	fmt.Println("show the PrevLoc", tt.PrevLoc)
+	//	tarx := 25.080223
+	//	tary := 121.697908
+
+	// set up fake camra
+	ta := Gps2dLocVel{}
+	ta.Lati = 25.080223
+	ta.Long = 121.697908
+	ta.Vel = 50.0
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	//	25.0674 121.66832
+	ta.Lati = 25.0674
+	ta.Long = 121.66832
+	ta.Vel = 100.0
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	tt.TargetCameraLoc.Timestamp = ts
+	fmt.Println("show all initial camera", tt.TargetCameraLoc, len(tt.TargetCameraLoc.Loc))
+	// set up Prev status
+	tt.PrevLoc.Lati = locx
+	tt.PrevLoc.Long = locy
+	tt.PrevLoc.Timestamp = ts
+	fmt.Println("show the initial  PrevLoc", tt.PrevLoc)
+	//
+	tt.CurrentLoc.Lati = locx
+	tt.CurrentLoc.Long = locy
+	tt.CurrentLoc.Timestamp = ts
 
 }
 
-func (tt *GLibInfo) Start(ts int, locx float64, locy float64) int {
+func (tt *GLibInfo) UpdateCamera() {
+}
+
+func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, float64) {
+	tt.UpdateCamera()
+	dist, flag := tt.GLibFilter(ts, locx, locy)
 	fmt.Println("start now", ts)
-	return 0
+	vel := tt.NearestCamera.Vel
+	return dist, flag, vel
 
 }
-func (tt *GLibInfo) FilterDistance(tarx float64, tary float64) (float64, int) {
-	locx := tt.CurrentLoc.Lati
-	locy := tt.CurrentLoc.Long
-	distcurr := tt.FilterCalDistance(locx, locy, tarx, tary)
-	locpx := tt.PrevLoc.Lati
-	locpy := tt.PrevLoc.Long
-	distprev := tt.FilterCalDistance(locpx, locpy, tarx, tary)
-	fmt.Println("dist current, dist prev", distcurr, distprev)
-	if distprev < distcurr {
-		return distcurr, 0
-	} else {
-		return distcurr, 1
-	}
 
+//func (tt *GLibInfo) FilterDistance(tarx float64, tary float64) (float64, int) {
+func (tt *GLibInfo) FilterDistance() (float64, int) {
+	//now we can only serve one camera
+	tt.NearestCamera.Distance = 9999999.88
+	tt.NearestCamera.Vel = 9999999.88
+	fmt.Println("show near camera", tt.NearestCamera.Distance, tt.NearestCamera.Vel)
+	for i := 0; i < len(tt.TargetCameraLoc.Loc); i++ {
+		fmt.Println("-----------calculate on camera:", i)
+		tarx := tt.TargetCameraLoc.Loc[i].Lati
+		tary := tt.TargetCameraLoc.Loc[i].Long
+
+		locx := tt.CurrentLoc.Lati
+		locy := tt.CurrentLoc.Long
+		distcurr := tt.FilterCalDistance(locx, locy, tarx, tary)
+		locpx := tt.PrevLoc.Lati
+		locpy := tt.PrevLoc.Long
+		distprev := tt.FilterCalDistance(locpx, locpy, tarx, tary)
+		fmt.Println("dist current, dist prev", distcurr, distprev)
+		// where 30 is faraway distance
+		if distprev < distcurr && distcurr > 30.0 {
+			//return distcurr, 0
+			fmt.Println("not put in candidate")
+		} else {
+			// calculate Nearest Camera that is satisfy condition
+			if distcurr < tt.NearestCamera.Distance {
+				fmt.Println("--------  run into fit camera ----------")
+				tt.NearestCamera.Distance = distcurr
+				tt.NearestCamera.Timestamp = tt.TargetCameraLoc.Timestamp
+				tt.NearestCamera.Vel = tt.TargetCameraLoc.Loc[i].Vel
+			}
+
+			//return distcurr, 1
+		}
+	}
+	flag := 0
+	if tt.NearestCamera.Distance < 300.0 {
+		flag = 1
+	}
+	return tt.NearestCamera.Distance, flag
+	//	return distcurr, 0
 }
 
 func (tt *GLibInfo) GLibFilter(ts int, gpsx float64, gpsy float64) (float64, int) {
-	tarx := 25.080223
-	tary := 121.697908
+	//	tarx := 25.080223
+	//	tary := 121.697908
 	tt.UpdateCurrent(ts, gpsx, gpsy)
-	dist, runflag := tt.FilterDistance(tarx, tary)
+
+	//	tt.FilterInitMap()
+	dist, runflag := tt.FilterDistance()
 	tt.FilterUpdatePrev(ts, gpsx, gpsy)
 	if runflag != 0 {
 		var notiflag int
