@@ -116,10 +116,18 @@ func (tt *GLibInfo) Start(ts int, locx float64, locy float64) string {
 	jm["flag"] = flag
 	jm["vel"] = vel
 	ret, _ := json.Marshal(jm)
-
 	//return dist, flag, vel
 	return string(ret)
 
+}
+
+func isApproach(dx float64, dx1 float64) bool {
+	if dx <= dx1 {
+		return true
+	} else {
+		return false
+	}
+	return true
 }
 
 //func (tt *GLibInfo) FilterDistance(tarx float64, tary float64) (float64, int) {
@@ -154,7 +162,8 @@ func (tt *GLibInfo) FilterDistance() (float64, int) {
 		} else {
 			// calculate Nearest Camera that is satisfy condition
 			// set up arround camera
-			if (distcurr < distprev) && distcurr < 1000.0 {
+			//if (distcurr < distprev) && distcurr < 1000.0 {
+			if isApproach(distcurr, distprev) && distcurr < 1000.0 {
 				if distcurr < tt.NearestCamera.Distance {
 					fmt.Println("--------  run into fit camera ----------")
 					tt.NearestCamera.Distance = distcurr
@@ -184,20 +193,6 @@ func (tt *GLibInfo) GLibFilter(ts int, gpsx float64, gpsy float64) (float64, int
 	dist, runflag := tt.FilterDistance()
 	tt.FilterUpdatePrev(ts, gpsx, gpsy)
 	return dist, runflag
-	/*
-		if runflag != 0 {
-			var notiflag int
-			fmt.Println(dist)
-			if dist < 500.0 {
-				notiflag = 1
-			} else {
-				notiflag = 0
-			}
-			return dist, notiflag
-		} else {
-			return dist, 0
-		}
-	*/
 }
 
 func (tt *GLibInfo) UpdateCurrent(ts int, gpsx float64, gpsy float64) {
