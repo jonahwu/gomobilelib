@@ -152,7 +152,7 @@ func (tt *GLibInfo) FilterDistance() NearCamLocVel {
 		distprev := tt.FilterCalDistance(locpx, locpy, tarx, tary)
 		fmt.Println("dist current, dist prev", distcurr, distprev)
 		// where 30 is faraway distance
-		if distcurr < 100.0 {
+		if distcurr < 50.0 {
 			//return distcurr, 0
 			fmt.Println("--------  run into fit camera ----------")
 			tt.NearestCamera.Distance = distcurr
@@ -163,7 +163,7 @@ func (tt *GLibInfo) FilterDistance() NearCamLocVel {
 			// calculate Nearest Camera that is satisfy condition
 			// set up arround camera
 			//if (distcurr < distprev) && distcurr < 1000.0 {
-			if isApproach(distcurr, distprev) && distcurr < 1000.0 {
+			if isApproach(distcurr, distprev) && distcurr < 300.0 {
 				if distcurr < tt.NearestCamera.Distance {
 					fmt.Println("--------  run into fit camera ----------")
 					tt.NearestCamera.Distance = distcurr
@@ -177,7 +177,7 @@ func (tt *GLibInfo) FilterDistance() NearCamLocVel {
 		}
 	}
 	//end of for loop end redefine the stauts to more emergency
-	if tt.NearestCamera.Distance < 300.0 {
+	if tt.NearestCamera.Distance < 100.0 {
 		tt.NearestCamera.Flag = 2
 	}
 	//return tt.NearestCamera.Distance, tt.NearestCamera.Flag
