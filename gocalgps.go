@@ -108,13 +108,13 @@ func (tt *GLibInfo) UpdateCamera() {
 //func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, int) {
 func (tt *GLibInfo) Start(ts int, locx float64, locy float64) string {
 	tt.UpdateCamera()
-	dist, flag := tt.GLibFilter(ts, locx, locy)
+	NearestCamera := tt.GLibFilter(ts, locx, locy)
 	fmt.Println("start now", ts)
-	vel := tt.NearestCamera.Vel
+	//	vel := NearestCamera.Vel
 	jm := make(map[string]interface{})
-	jm["dist"] = dist
-	jm["flag"] = flag
-	jm["vel"] = vel
+	jm["dist"] = NearestCamera.Distance
+	jm["flag"] = NearestCamera.Flag
+	jm["vel"] = NearestCamera.Vel
 	ret, _ := json.Marshal(jm)
 	//return dist, flag, vel
 	return string(ret)
@@ -131,7 +131,7 @@ func isApproach(dx float64, dx1 float64) bool {
 }
 
 //func (tt *GLibInfo) FilterDistance(tarx float64, tary float64) (float64, int) {
-func (tt *GLibInfo) FilterDistance() (float64, int) {
+func (tt *GLibInfo) FilterDistance() NearCamLocVel {
 	//now we can only serve one camera
 	tt.NearestCamera.Distance = 9999999.88
 	tt.NearestCamera.Vel = 8888888
@@ -180,19 +180,20 @@ func (tt *GLibInfo) FilterDistance() (float64, int) {
 	if tt.NearestCamera.Distance < 300.0 {
 		tt.NearestCamera.Flag = 2
 	}
-	return tt.NearestCamera.Distance, tt.NearestCamera.Flag
+	//return tt.NearestCamera.Distance, tt.NearestCamera.Flag
+	return tt.NearestCamera
 	//	return distcurr, 0
 }
 
-func (tt *GLibInfo) GLibFilter(ts int, gpsx float64, gpsy float64) (float64, int) {
+func (tt *GLibInfo) GLibFilter(ts int, gpsx float64, gpsy float64) NearCamLocVel {
 	//	tarx := 25.080223
 	//	tary := 121.697908
 	tt.UpdateCurrent(ts, gpsx, gpsy)
 
 	//	tt.FilterInitMap()
-	dist, runflag := tt.FilterDistance()
+	NearestCamera := tt.FilterDistance()
 	tt.FilterUpdatePrev(ts, gpsx, gpsy)
-	return dist, runflag
+	return NearestCamera
 }
 
 func (tt *GLibInfo) UpdateCurrent(ts int, gpsx float64, gpsy float64) {
