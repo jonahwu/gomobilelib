@@ -309,7 +309,7 @@ func (tt *GLibInfo) BeepOrNot(nc NearCamLocVel) bool {
 }
 
 //func (tt *GLibInfo) Start(ts int, locx float64, locy float64) (float64, int, int) {
-func (tt *GLibInfo) Start(ts int, locx float64, locy float64) string {
+func (tt *GLibInfo) Start(ts int, locx float64, locy float64, locv int) string {
 	tt.UpdateCamera()
 	NearestCamera := tt.GLibFilter(ts, locx, locy)
 
