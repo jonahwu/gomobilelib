@@ -255,6 +255,342 @@ func (tt *GLibInfo) InitState(id string, ts int, locx float64, locy float64) {
 	ta.Vel = 50
 	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
 
+	//high way road
+	ta.Lati = 23.082616
+	ta.Long = 120.251739
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 22.918658
+	ta.Long = 120.260136
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 22.867977
+	ta.Long = 120.284681
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 23.397736
+	ta.Long = 120.355249
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 23.527652
+	ta.Long = 120.405818
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 23.831926
+	ta.Long = 120.484809
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.462055
+	ta.Long = 120.788042
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.591946
+	ta.Long = 120.860447
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.726501
+	ta.Long = 120.942318
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.941028
+	ta.Long = 121.193528
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.970357
+	ta.Long = 121.216665
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.060703
+	ta.Long = 121.332635
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.065003
+	ta.Long = 121.383882
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.064278
+	ta.Long = 121.601444
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.063947
+	ta.Long = 121.601696
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.028276
+	ta.Long = 121.251802
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.959269
+	ta.Long = 121.324863
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 23.298801
+	ta.Long = 120.407292
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 22.769220
+	ta.Long = 120.441593
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 22.507159
+	ta.Long = 120.524929
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.293697
+	ta.Long = 120.602093
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.071049
+	ta.Long = 120.638645
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 23.869973
+	ta.Long = 120.705086
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.591296
+	ta.Long = 120.779073
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.715066
+	ta.Long = 120.893935
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.807201
+	ta.Long = 121.149866
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.924304
+	ta.Long = 121.304277
+	ta.Vel = 110
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.977514
+	ta.Long = 121.465517
+	ta.Vel = 100
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.976095
+	ta.Long = 121.570830
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 25.046878
+	ta.Long = 121.625791
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.994559
+	ta.Long = 121.652551
+	ta.Vel = 80
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.916126
+	ta.Long = 121.732855
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.899525
+	ta.Long = 121.753732
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.791564
+	ta.Long = 121.780956
+	ta.Vel = 90
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+	//taichung west
+	ta.Lati = 24.112203
+	ta.Long = 120.363596
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.113662
+	ta.Long = 120.363596
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.196201
+	ta.Long = 120.594749
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.182157
+	ta.Long = 120.596694
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.182937
+	ta.Long = 120.600228
+	ta.Vel = 40
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.182937
+	ta.Long = 120.602720
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.202883
+	ta.Long = 120.606619
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.190093
+	ta.Long = 120.613113
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.161130
+	ta.Long = 120.617180
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.181043
+	ta.Long = 120.619837
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.171978
+	ta.Long = 120.621162
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.201611
+	ta.Long = 120.627693
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.167393
+	ta.Long = 120.630821
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.158053
+	ta.Long = 120.639695
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.164878
+	ta.Long = 120.640725
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.193290
+	ta.Long = 120.642381
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.194983
+	ta.Long = 120.644773
+	ta.Vel = 80
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.197181
+	ta.Long = 120.650086
+	ta.Vel = 80
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.199574
+	ta.Long = 120.655634
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.172448
+	ta.Long = 120.660865
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.096797
+	ta.Long = 120.352287
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.151021
+	ta.Long = 120.607964
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.129442
+	ta.Long = 120.609224
+	ta.Vel = 80
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.138644
+	ta.Long = 120.609224
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.154502
+	ta.Long = 120.611018
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.149775
+	ta.Long = 120.619802
+	ta.Vel = 40
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.147081
+	ta.Long = 120.623106
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.144829
+	ta.Long = 120.623467
+	ta.Vel = 40
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.145007
+	ta.Long = 120.627274
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.127438
+	ta.Long = 120.629584
+	ta.Vel = 60
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.146949
+	ta.Long = 120.630354
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.138207
+	ta.Long = 120.630722
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
+	ta.Lati = 24.150769
+	ta.Long = 120.647317
+	ta.Vel = 50
+	tt.TargetCameraLoc.Loc = append(tt.TargetCameraLoc.Loc, ta)
+
 	tt.TargetCameraLoc.Timestamp = ts
 	fmt.Println("show all initial camera", tt.TargetCameraLoc, len(tt.TargetCameraLoc.Loc))
 	// set up Prev status
